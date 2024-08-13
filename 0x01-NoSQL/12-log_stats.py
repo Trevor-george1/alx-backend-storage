@@ -11,10 +11,9 @@ def provide_stats(mongo_collection):
 
 
     print("Methods:")
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    for method in methods:
+    for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
         count = mongo_collection.count_documents({"method": method})
-        print(f"\t method {method}: {count}")
+        print(f"\tmethod {method}: {count}")
     
     number_of_docs = mongo_collection.count_documents(
         {"method" : "GET", "path": "/status"})
