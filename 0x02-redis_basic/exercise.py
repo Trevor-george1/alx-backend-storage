@@ -13,7 +13,7 @@ def count_calls(method: Callable) -> callable:
     @wraps(method)
     def wrapper(self, *args, **kwargs):
         """wrapper for decorated function"""
-        self.redis.incr(key)
+        self._redis.incr(key)
         return method(self, *args, **kwargs)
     return wrapper
 
@@ -26,6 +26,8 @@ class Cache:
         """initialize the class cache"""
         self._redis = redis.Redis()
         self._redis.flushdb()
+
+    @count_calls
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """store method that takes data and stores in redis"""
