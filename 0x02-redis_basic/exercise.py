@@ -12,7 +12,7 @@ class Cache:
     def __init__(self) -> None:
         """initialize the class cache"""
         self._redis = redis.Redis()
-        self._redis.flushdb
+        self._redis.flushdb()
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """store method that takes data and stores in redis"""
