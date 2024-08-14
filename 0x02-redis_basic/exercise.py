@@ -6,6 +6,7 @@ import uuid
 from typing import Union, Callable, Optional
 from functools import wraps
 
+
 def count_calls(method: Callable) -> Callable:
     """returns a callable"""
     key = method.__qualname__
@@ -15,7 +16,7 @@ def count_calls(method: Callable) -> Callable:
         """wrapper for decorated function"""
         self._redis.incr(key)
         return method(self, *args, **kwargs)
-    
+
     return wrapper
 
 
@@ -60,6 +61,7 @@ def replay(fn: Callable):
 
         print("{}(*{}) -> {}".format(function_name, input, output))
 
+
 class Cache:
 
     """defines a class Cache"""
@@ -75,7 +77,7 @@ class Cache:
         random_key = str(uuid.uuid4())
         self._redis.mset({random_key: data})
         return random_key
-    
+
     def get(self, key: str,
             fn: Optional[callable] = None) -> Union[str, bytes, int, float]:
         """convert the data back to the desired format"""
@@ -83,13 +85,13 @@ class Cache:
         if fn:
             value = fn(value)
         return value
-    
+
     def get_str(self, key: str) -> str:
-        """automatically parameters with correct 
+        """automatically parameters with correct
         converson function"""
         value = self._redis.get(key)
         return value.decode("utf-8")
-    
+
     def get_int(self, key: str) -> int:
         """conversion function"""
         value = self._redis.get(key)
